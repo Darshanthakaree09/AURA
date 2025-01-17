@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">AURA</string>
+    //Headings
+    <string name="heading_one">The Imagination Engine</string>
+    <string name="heading_two">AI: Gateway to Reality</string>
+    <string name="heading_three">We Are AURA</string>
+
+    //Description
+    <string name="desc_one">Create stunning AI-generated art. Explore vibrant colors, unique shapes, and transform your ideas into captivating visuals.</string>
+    <string name="desc_two">Experience the power of AI to turn your visions into tangible outcomes. Let AI be the bridge between your imagination and the real world.</string>
+    <string name="desc_three">AURA: AI-Driven Understanding and Response Algorithm</string>
+</resources>

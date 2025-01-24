@@ -22,7 +22,7 @@ import java.util.Map;
 public class ImageGenerator {
     private final String url = "https://api.openai.com/v1/images/generations";
     private final Context context;
-    private final String apiKey = "API"; // Replace with your actual OpenAI API key
+    private final String apiKey = "// Replace with your actual OpenAI API key"; // Replace with your actual OpenAI API key
 
     public ImageGenerator(Context context) {
         this.context = context;

@@ -9,4 +9,31 @@
     <string name="desc_one">Create stunning AI-generated art. Explore vibrant colors, unique shapes, and transform your ideas into captivating visuals.</string>
     <string name="desc_two">Experience the power of AI to turn your visions into tangible outcomes. Let AI be the bridge between your imagination and the real world.</string>
     <string name="desc_three">AURA: AI-Driven Understanding and Response Algorithm</string>
+    <string-array name="language_names">
+        <item>English</item>
+        <item>Hindi</item>
+        <item>Spanish</item>
+        <item>French</item>
+        <item>German</item>
+        <item>Chinese</item>
+        <item>Japanese</item>
+        <item>Korean</item>
+        <item>Italian</item>
+        <item>Russian</item>
+    </string-array>
+
+    <string-array name="language_codes">
+        <item>en</item>
+        <item>hi</item>
+        <item>es</item>
+        <item>fr</item>
+        <item>de</item>
+        <item>zh</item>
+        <item>ja</item>
+        <item>ko</item>
+        <item>it</item>
+        <item>ru</item>
+    </string-array>
+
+
 </resources>

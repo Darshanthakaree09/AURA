@@ -1,21 +1,81 @@
-<?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/background"
+    android:id="@+id/mainlayout"
     tools:context=".MainActivity">
 
+    <!-- Background Animation -->
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/backgroundAnimation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/bgeffect2" />
 
+    <!-- Main Heading -->
+    <TextView
+        android:id="@+id/textheading"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:gravity="center"
+        android:fontFamily="@font/poppins_bold"
+        android:text="TEXT TO VISUALS"
+        android:textColor="@color/background"
+        android:background="@color/buttontext"
+        android:textSize="35dp" />
+
+    <!-- ProgressBar and TextView for "Generating Image" -->
+    <RelativeLayout
+        android:id="@+id/progressLayout"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:visibility="gone"
+        android:background="@color/buttontext"
+        android:layout_alignTop="@id/textheading"
+        android:layout_alignBottom="@id/textheading"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:gravity="center">
+
+        <com.airbnb.lottie.LottieAnimationView
+            android:id="@+id/progressBar"
+            android:layout_width="50dp"
+            android:layout_marginBottom="10dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentTop="true"
+            android:scaleType="fitXY"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@id/progressText"
+            app:lottie_autoPlay="true"
+            app:lottie_loop="true"
+            app:lottie_rawRes="@raw/ai_hand_waving" />
+
+        <TextView
+            android:gravity="center"
+            android:id="@+id/progressText"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Generating..."
+            android:textSize="35dp"
+            android:textAllCaps="true"
+            android:fontFamily="@font/poppins_bold"
+            android:textColor="@color/background" />
+    </RelativeLayout>
+
+    <!-- Other Layouts Remain Same -->
     <com.airbnb.lottie.LottieAnimationView
         android:id="@+id/animation_view"
         android:layout_width="250dp"
         android:layout_height="250dp"
         android:layout_alignTop="@+id/recycler"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@id/recycler"
+        android:layout_alignEnd="@id/recycler"
+        android:layout_alignBottom="@id/recycler"
         android:layout_gravity="center"
         android:layout_marginTop="102dp"
         app:lottie_autoPlay="true"
@@ -23,53 +83,49 @@
         android:layout_margin="40dp"
         app:lottie_rawRes="@raw/ai" />
 
-    <TextView
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_below="@id/generate"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/promptLayout"
-        android:layout_marginBottom="-50dp"
-        android:layout_marginLeft="0dp"
-        android:textAlignment="center"
-        android:fontFamily="@font/poppins_bold"
-        android:text="TEXT TO VISUALS"
-        android:textColor="@color/buttontext"
-        android:textSize="30dp" />
+        android:layout_height="400dp"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/recycler"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
     <com.google.android.material.textfield.TextInputLayout
+        android:layout_marginTop="67dp"
+        android:id="@+id/promptLayout"
         android:layout_width="match_parent"
         android:layout_height="75dp"
-        android:layout_marginStart="20sp"
-        android:layout_marginEnd="20sp"
-        android:background="#00FFFDF6"
-        app:boxCornerRadiusTopStart="30dp"
-        app:boxCornerRadiusBottomEnd="30dp"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="60sp"
-        android:textAlignment="center"
-        android:hint="Enter Prompt"
-        app:boxBackgroundColor="#28FFFFFF"
+        android:layout_marginStart="20sp"
+        android:background="#00FFFDF6"
+        android:hint="Enter Prompt, I Will Convert It To Image"
         android:outlineAmbientShadowColor="@color/buttontext"
-        android:textColorHint="@color/active"
-        app:cursorColor="@color/white"
-        android:id="@+id/promptLayout"
+        android:textAlignment="center"
+        android:textColorHint="@color/inactive"
+        app:boxBackgroundColor="@color/light_background"
+        app:boxCornerRadiusBottomEnd="30dp"
+        app:boxCornerRadiusTopStart="30dp"
         app:boxStrokeColor="@color/active"
+        android:outlineSpotShadowColor="@color/white"
+        app:cursorColor="@color/white"
         app:hintTextColor="@color/white">
 
         <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/promptET"
             android:layout_width="match_parent"
             android:layout_height="75dp"
             android:inputType="textMultiLine"
-            android:id="@+id/promptET"
-            android:textColor="@color/white"/>
-
+            android:textColor="@color/inactive" />
     </com.google.android.material.textfield.TextInputLayout>
-
-
 
     <Button
         android:layout_width="200dp"
         android:layout_height="55dp"
-        android:textAllCaps="false"
+        android:textAllCaps="true"
         android:layout_below="@id/promptLayout"
         android:layout_centerHorizontal="true"
         android:id="@+id/generate"
@@ -77,14 +133,29 @@
         android:textSize="15dp"
         android:backgroundTint="@color/active"
         android:drawableLeft="@drawable/baseline_auto_awesome_24"
-        android:layout_marginTop="30sp"/>
+        android:layout_marginTop="2sp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:layout_marginTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/recycler"
-        android:layout_below="@id/generate"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
-
+    <LinearLayout
+        android:layout_width="280dp"
+        android:layout_height="20dp"
+        android:id="@+id/more"
+        android:gravity="center"
+        android:background="@drawable/reccorner"
+        android:layout_alignParentBottom="true"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="More Features"
+            android:fontFamily="@font/poppins"
+            android:textSize="12dp"
+            android:textAlignment="center"
+            android:textColor="@color/white" />
+        <TextView
+            android:layout_marginLeft="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/baseline_keyboard_arrow_down_24" />
+    </LinearLayout>
 </RelativeLayout>

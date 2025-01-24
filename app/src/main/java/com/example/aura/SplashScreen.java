@@ -29,8 +29,19 @@ public class SplashScreen extends AppCompatActivity {
             public void run() {
                 Intent intent = new Intent(SplashScreen.this, GetStarted.class);
                 startActivity(intent);
-                finish();
+
+                // Apply fade-in and fade-out animations
+                overridePendingTransition(R.anim.fade_in, R.anim.fade_out); // Fade-in for next activity, fade-out for the current one
+
+                // Delay finish to give time for the animation to complete
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish(); // Finish the SplashScreen activity after the animation delay
+                    }
+                }, 500); // Adjust delay (in milliseconds) to match the duration of your fade-out animation
             }
+
         }, 3000);
 
     }

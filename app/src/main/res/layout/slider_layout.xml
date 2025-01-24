@@ -7,13 +7,14 @@
     android:background="@color/background"
     app:flow_horizontalAlign="center">
 
+
     <ImageView
         android:id="@+id/titleImage"
         android:layout_width="wrap_content"
         android:layout_height="380dp"
-        android:layout_marginStart="60dp"
-        android:layout_marginEnd="60dp"
-        android:src="@drawable/robo2"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:src="@drawable/robo1"
         android:textAlignment="center"/>
 
     <TextView
@@ -37,6 +38,7 @@
         android:textAlignment="center"
         android:textColor="@color/white"
         android:textSize="16dp"/>
+
 
 
 </LinearLayout>

@@ -3,8 +3,12 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
 
+        <color name="status_bar_light">#000000</color> <!-- White for light mode -->
+        <color name="status_bar_dark">#000000</color> <!-- Black for dark mode -->
+
     //onboarding colors
     <color name="background">#000000</color>
+    <color name="light_background">#1E1F22</color>
     <color name="buttontext">#0E4AFF</color>
 
     //indicator color

@@ -1,58 +1,80 @@
 package com.example.aura;
 
-import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
-
 import com.airbnb.lottie.LottieAnimationView;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
-
 import java.util.ArrayList;
 import java.util.Objects;
 
 public class MainActivity extends AppCompatActivity {
+    private GestureDetector gestureDetector;
+    LottieAnimationView animationView;
+    LottieAnimationView progressBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        // Set status bar color if API level is Lollipop or above
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setStatusBarColor(getResources().getColor(R.color.buttontext));
+        }
 
+        // Initialize UI components
         TextInputLayout promptLayout = findViewById(R.id.promptLayout);
         TextInputEditText promptET = findViewById(R.id.promptET);
-
         Button generate = findViewById(R.id.generate);
+        LinearLayout more = findViewById(R.id.more);
+        animationView = findViewById(R.id.animation_view);
+        progressBar = findViewById(R.id.progressBar);
         RecyclerView recyclerView = findViewById(R.id.recycler);
-        LottieAnimationView animationView = findViewById(R.id.animation_view);
+        RelativeLayout progressLayout = findViewById(R.id.progressLayout);
+        TextView textheading = findViewById(R.id.textheading);
 
+        // GestureDetector for detecting swipe gestures
+        gestureDetector = new GestureDetector(this, new GestureListener());
+
+        // Set RecyclerView LayoutManager
         recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
 
-        ProgressDialog progressDialog = new ProgressDialog(MainActivity.this);
-        progressDialog.setMessage("Generating...");
+        // Detect swipe gestures on the main layout
+        findViewById(R.id.mainlayout).setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return gestureDetector.onTouchEvent(event); // Pass touch event to GestureDetector
+            }
+        });
 
         generate.setOnClickListener(view -> {
             if (Objects.requireNonNull(promptET.getText()).toString().isEmpty()) {
                 promptLayout.setError("This Field is Required");
             } else {
-                progressDialog.show();
                 animationView.setVisibility(View.VISIBLE);
                 animationView.playAnimation();
+                textheading.setVisibility(View.GONE); // Hide the heading
+                progressLayout.setVisibility(View.VISIBLE); // Show the progress bar and text
 
-                // Fixed dimensions for width and height (e.g., 256)
                 int fixedWidth = 256;
                 int fixedHeight = 256;
-                int fixedImageCount = 1; // Always generate 1 image
+                int fixedImageCount = 1;
 
                 new ImageGenerator(MainActivity.this).generate(
                         promptET.getText().toString(),
@@ -62,9 +84,10 @@ public class MainActivity extends AppCompatActivity {
                         new OnLoaded() {
                             @Override
                             public void loaded(ArrayList<String> arrayList) {
-                                progressDialog.dismiss();
                                 animationView.cancelAnimation();
                                 animationView.setVisibility(View.GONE);
+                                progressLayout.setVisibility(View.GONE); // Hide the progress bar
+                                textheading.setVisibility(View.VISIBLE); // Show the heading back
 
                                 if (arrayList == null || arrayList.isEmpty()) {
                                     Toast.makeText(MainActivity.this, "No images generated. Try again!", Toast.LENGTH_SHORT).show();
@@ -75,7 +98,69 @@ public class MainActivity extends AppCompatActivity {
                             }
                         }
                 );
+
+                // Add a timeout handler to ensure progress stops on failure
+                new Handler(Looper.getMainLooper()).postDelayed(() -> {
+                    if (progressLayout.getVisibility() == View.VISIBLE) {
+                        animationView.cancelAnimation();
+                        animationView.setVisibility(View.GONE);
+                        progressLayout.setVisibility(View.GONE);
+                        textheading.setVisibility(View.VISIBLE);
+                        Toast.makeText(MainActivity.this, "Image generation timed out. Please try again.", Toast.LENGTH_SHORT).show();
+                    }
+                }, 10000); // Set timeout duration (e.g., 10 seconds)
             }
         });
+
+
+        more.setOnClickListener(view -> {
+            Intent intent = new Intent(MainActivity.this, MoreFeatures.class);
+            startActivity(intent);
+            overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
+        });
+    }@Override
+    protected void onPause() {
+        super.onPause();
+        if (progressBar.isAnimating()) {
+            progressBar.cancelAnimation(); // Stop animation when pausing the activity
+        }if (animationView.isAnimating()) {
+            animationView.cancelAnimation(); // Stop animation when pausing the activity
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (!progressBar.isAnimating()) {
+            progressBar.playAnimation(); // Restart animation when resuming
+        }  if (!animationView.isAnimating()) {
+            animationView.playAnimation(); // Restart animation when resuming
+        }
+    }
+
+
+    private class GestureListener extends GestureDetector.SimpleOnGestureListener {
+        @Override
+        public boolean onDown(MotionEvent e) {
+            return true; // Ensures other gestures like onFling are detected
+        }
+
+        @Override
+        public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
+            float distanceY = e1.getY() - e2.getY();
+            Log.d("Gesture", "distanceY: " + distanceY + ", velocityY: " + velocityY);
+
+            if (distanceY > 30 && Math.abs(velocityY) > 50) {
+                Log.i("Gesture", "Swipe-up gesture detected");
+                Intent intent = new Intent(MainActivity.this, MoreFeatures.class);
+                startActivity(intent);
+                overridePendingTransition(R.anim.slide_up, R.anim.no_animation);
+                finish();
+                return true;
+            }
+
+            Log.d("Gesture", "Gesture did not meet thresholds");
+            return false;
+        }
     }
 }

@@ -7,14 +7,56 @@
     android:background="@color/background"
     tools:context=".GetStarted">
 
+    <!--    <com.airbnb.lottie.LottieAnimationView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="70dp"-->
+<!--        app:lottie_rawRes="@raw/smoke"-->
+<!--        app:lottie_autoPlay="true"-->
+<!--        app:lottie_loop="true"-->
+<!--        android:scaleType="fitCenter"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"/>-->
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/ellipse1"
+        android:layout_width="146dp"
+        android:layout_height="100dp"
+        android:scaleType="fitXY"
+        android:visibility="invisible"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/backbtn"
+        app:layout_constraintHorizontal_bias="0.741"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/backbtn"
+        app:layout_constraintVertical_bias="0.269"
+        app:lottie_autoPlay="true"
+        app:lottie_colorFilter="@color/active"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/btn" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/ellipse2"
+        android:layout_width="146dp"
+        android:layout_height="100dp"
+        android:scaleType="fitXY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/nextbtn"
+        app:layout_constraintHorizontal_bias="0.275"
+        app:layout_constraintStart_toStartOf="@+id/nextbtn"
+        app:layout_constraintTop_toTopOf="@+id/nextbtn"
+        app:layout_constraintVertical_bias="0.269"
+        app:lottie_autoPlay="true"
+        app:lottie_colorFilter="@color/active"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/btn" />
+
     <Button
         android:id="@+id/skipButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#00000000"
         android:text="SKIP"
-        android:textColor="@color/buttontext"
-        android:textSize="20sp"
+        android:textColor="#C4FFFFFF"
+        android:textSize="15sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,35 +70,16 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
-        android:id="@+id/ellipse1"
-        android:layout_width="117dp"
-        android:layout_height="75dp"
-        android:src="@drawable/ellipse2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/backbtn"
-        app:layout_constraintHorizontal_bias="0.586"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/backbtn"
-        app:layout_constraintVertical_bias="0.481" />
 
-    <ImageView
-        android:id="@+id/ellipse2"
-        android:layout_width="117dp"
-        android:layout_height="70dp"
-        android:src="@drawable/ellipse1"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/nextbtn"
-        app:layout_constraintHorizontal_bias="0.482"
-        app:layout_constraintStart_toStartOf="@+id/nextbtn"
-        app:layout_constraintTop_toTopOf="@+id/nextbtn"
-        app:layout_constraintVertical_bias="0.481" />
+
+
 
     <Button
         android:id="@+id/backbtn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="#00000000"
+        android:visibility="invisible"
         android:text="BACK"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -72,13 +95,12 @@
 
     <LinearLayout
         android:id="@+id/indicator_layout"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:layout_width="0dp"
+        android:layout_height="2dp"
         android:layout_marginBottom="40dp"
+        android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/slideViewPager">
-    </LinearLayout>
+        app:layout_constraintStart_toStartOf="@+id/slideViewPager"></LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
